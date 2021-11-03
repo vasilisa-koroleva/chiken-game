@@ -13,11 +13,79 @@
         {
            font-size: 40px; 
         }
-    </style>
+
+        .gameBox {
+            width: 400px;
+            height: 300px;
+            background-color: rgba(0, 255, 255, 0.424);
+        }
+        .gameBox, * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .game {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            
+        }
+        
+        .ground {
+            width: 100%;
+            height: 50px;
+            background-color: rgb(42, 165, 118);
+        }
+
+        .item {
+            /* test */
+            /* box-sizing: border-box;
+            border: 1px solid red;
+            background-color: rgb(41, 49, 46); */
+
+            width: 40px;
+            height: 40px;
+            align-self: flex-end;
+            /* //display: inline-block; */
+        }
+
+        .player {
+            position: absolute;
+            background-color: rgb(240, 234, 178);
+            margin-left: 40px;
+            transition: all 1s;
+        }
+
+        .player.fly{
+            margin-bottom: 50px;
+        }
+
+        .wall {
+            background-color: rgb(22, 87, 62);
+        }
+
+    </style>              
 </head>
 <body>
     <div class="title">
         Игра кура
+    </div>
+
+    <div class="gameBox">
+        <div class="game">
+            <div class="item player"></div> 
+            <div class="item i1"></div>
+            <div class="item i2"></div>
+            <div class="item i3"></div>
+            <div class="item i4"></div>
+            <div class="item i5"></div>
+            <div class="item i6"></div>
+            <div class="item i7"></div>
+            <div class="item i8"></div>
+            <div class="item i9"></div>
+            <div class="item i10"></div>
+        </div>
+        <div class="ground"></div>
     </div>
 
     <script>
@@ -25,6 +93,34 @@
         // $(".title").click(function () {
         //     //мой код
         // });
+
+        let wallsPosition = [10, 8, 4]
+
+        let isFling = false
+        $('html').keyup(function () {
+            isFling = true
+            $('.player').addClass('fly')
+            setTimeout(function () {
+                isFling = false
+                $('.player').removeClass('fly')
+            }, 2000)
+        })
+
+        setInterval(function () {
+            if ((wallsPosition.indexOf(2)+1) && !isFling) alert('GAME OVER!') 
+            $('.item').removeClass('wall')
+            wallsPosition = wallsPosition.map(function (wallPosition) {
+                console.log(wallPosition)
+                if (wallPosition < 0) wallPosition = 10
+                $(`.i${wallPosition}`).addClass('wall')
+                return --wallPosition
+            })          
+                
+            console.log(isFling)
+ 
+            
+        }, 1000)
+
     </script>
 </body>
 </html>
